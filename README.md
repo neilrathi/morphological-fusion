@@ -2,10 +2,11 @@
 Code for morpheme ordering study.
 
 ## To-do:
-Calculate probability of a given feature combination, and calculate the higher probabilities
+* Derived forms
+* Beam search for top-k
 
-Reduce computation time
-
-Remove other parts-of-speech
-
-Possibly cut derived forms
+## Completed
+* Surprisal of forms
+* Reduced runtime w/ early stopping
+* Created results files
+* Model saving
