@@ -8,7 +8,10 @@ Code for morpheme ordering study.
 * `lat`, `hun`, etc. contain `train` files, `test` files, and `results` files for each feature combination (organized into folders)
 * `language_surprisals.txt` contains mean and median surprisal values for each form in a language
 
-## To-do:
+## Runtime
+For Latin, it takes ~7.5 minutes to create surprisal files for each word within each feature combination for verbs, ~15 for adjectives, and ~30 for nouns. It takes ~2.5 seconds per word to compute surprisal and predict the most likely form. For each feature combination, there are ~2400 forms for verbs, ~4000 for adjectives, and ~8400 for nouns.
+
+## To-do
 * Derived forms
 * Beam search for top-k
 * Fix `FailedPreconditionError` in `model_run.py`
