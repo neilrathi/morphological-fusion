@@ -1,4 +1,5 @@
-Correct Form	Predicted Form	Surprisalgravēdinōse	gravēdinōsus	19.347343113954366
+Correct Form	Predicted Form	Surprisal
+gravēdinōse	gravēdinōsus	19.347343113954366
 gravide	gravidus	15.077189289484522
 gravissime	gravissimus	20.10686616271414
 gregārie	gregārius	24.15544338249856
