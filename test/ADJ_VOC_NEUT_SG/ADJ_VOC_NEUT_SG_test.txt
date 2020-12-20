@@ -1,0 +1,156 @@
+<start> g r a v ē d i n ō s u m <end>	<start> ADJ VOC NEUT SG g r a v e d i n o s u s <end>
+<start> g r a v i d u m <end>	<start> ADJ VOC NEUT SG g r a v i d u s <end>
+<start> g r a v i u s <end>	<start> ADJ VOC NEUT SG g r a v i o r <end>
+<start> g r a v i s s i m u m <end>	<start> ADJ VOC NEUT SG g r a v i s s i m u s <end>
+<start> g r e g ā l e <end>	<start> ADJ VOC NEUT SG g r e g a l i s <end>
+<start> g r e g ā r i u m <end>	<start> ADJ VOC NEUT SG g r e g a r i u s <end>
+<start> g r e m i ā l e <end>	<start> ADJ VOC NEUT SG g r e m i a l i s <end>
+<start> g r i s e a t u m <end>	<start> ADJ VOC NEUT SG g r i s e a t u s <end>
+<start> g r i s e o a u r a n t i a c u m <end>	<start> ADJ VOC NEUT SG g r i s e o a u r a n t i a c u s <end>
+<start> g r i s e o l u m <end>	<start> ADJ VOC NEUT SG g r i s e o l u s <end>
+<start> g r i s e u m <end>	<start> ADJ VOC NEUT SG g r i s e u s <end>
+<start> g r o e n l a n d i c u m <end>	<start> ADJ VOC NEUT SG g r o e n l a n d i c u s <end>
+<start> g r o s s i u s <end>	<start> ADJ VOC NEUT SG g r o s s i o r <end>
+<start> g r o s s u m <end>	<start> ADJ VOC NEUT SG g r o s s u s <end>
+<start> N a r b ō n e n s e <end>	<start> ADJ VOC NEUT SG N a r b o n e n s i s <end>
+<start> g u a m e n s e <end>	<start> ADJ VOC NEUT SG g u a m e n s i s <end>
+<start> g u a n g x i e n s e <end>	<start> ADJ VOC NEUT SG g u a n g x i e n s i s <end>
+<start> g u a r a n i c u m <end>	<start> ADJ VOC NEUT SG g u a r a n i c u s <end>
+<start> g u a t e m a l e n s e <end>	<start> ADJ VOC NEUT SG g u a t e m a l e n s i s <end>
+<start> g u b e r n ā b i l e <end>	<start> ADJ VOC NEUT SG g u b e r n a b i l i s <end>
+<start> g u i a n e n s e <end>	<start> ADJ VOC NEUT SG g u i a n e n s i s <end>
+<start> g u i n e e n s e <end>	<start> ADJ VOC NEUT SG g u i n e e n i s <end>
+<start> g u i n e e n s e <end>	<start> ADJ VOC NEUT SG g u i n e e n s i s <end>
+<start> g u i z h o u e n s e <end>	<start> ADJ VOC NEUT SG g u i z h o u e n s i s <end>
+<start> g u l ā r e <end>	<start> ADJ VOC NEUT SG g u l a r i s <end>
+<start> g u s t ā b i l e <end>	<start> ADJ VOC NEUT SG g u s t a b i l i s <end>
+<start> g u t t ā t u m <end>	<start> ADJ VOC NEUT SG g u t t a t u s <end>
+<start> g y m n a s t i c u m <end>	<start> ADJ VOC NEUT SG g y m n a s t i c u s <end>
+<start> g y m n i c u m <end>	<start> ADJ VOC NEUT SG g y m n i c u s <end>
+<start> h a b ē n u l ā r u m <end>	<start> ADJ VOC NEUT SG h a b e n u l a r u s <end>
+<start> h a b i l i u s <end>	<start> ADJ VOC NEUT SG h a b i l i o r <end>
+<start> h a b i t ā b i l e <end>	<start> ADJ VOC NEUT SG h a b i t a b i l i s <end>
+<start> h a b i t u ā l e <end>	<start> ADJ VOC NEUT SG h a b i t u a l i s <end>
+<start> h a d r ū m ē t ī n u m <end>	<start> ADJ VOC NEUT SG h a d r u m e t i n u s <end>
+<start> h a e d ī n u m <end>	<start> ADJ VOC NEUT SG h a e d i n u s <end>
+<start> h a e m a t i n u m <end>	<start> ADJ VOC NEUT SG h a e m a t i n u s <end>
+<start> h a e m a t o b i u m <end>	<start> ADJ VOC NEUT SG h a e m a t o b i u s <end>
+<start> h a e m o l y t i c u m <end>	<start> ADJ VOC NEUT SG h a e m o l y t i c u s <end>
+<start> h a e m o r r h o i d a l e <end>	<start> ADJ VOC NEUT SG h a e m o r r h o i d a l i s <end>
+<start> h a e r e t i c ā l e <end>	<start> ADJ VOC NEUT SG h a e r e t i c a l i s <end>
+<start> h a e s i t ā b u n d u m <end>	<start> ADJ VOC NEUT SG h a e s i t a b u n d u s <end>
+<start> h a g i o g r a p h i c u m <end>	<start> ADJ VOC NEUT SG h a g i o g r a p h i c u s <end>
+<start> N ī l i a c u m <end>	<start> ADJ VOC NEUT SG N i l i a c u s <end>
+<start> N ī l ō t i c u m <end>	<start> ADJ VOC NEUT SG N i l o t i c u s <end>
+<start> h a i n a n ē n s e <end>	<start> ADJ VOC NEUT SG h a i n a n e n s i s <end>
+<start> h a l l e <end>	<start> ADJ VOC NEUT SG h a l l u c i s <end>
+<start> h a l o p h i l u m <end>	<start> ADJ VOC NEUT SG h a l o p h i l u s <end>
+<start> h ā m ā t u m <end>	<start> ADJ VOC NEUT SG h a m a t u s <end>
+<start> h ā m i f o r m e <end>	<start> ADJ VOC NEUT SG h a m i f o r m i s <end>
+<start> h a n t o n i e n s e <end>	<start> ADJ VOC NEUT SG h a n t o n i e n s i s <end>
+<start> h a r ē n ā c e u m <end>	<start> ADJ VOC NEUT SG h a r e n a c e u s <end>
+<start> h a r ē n ā r i u m <end>	<start> ADJ VOC NEUT SG h a r e n a r i u s <end>
+<start> h a r ē n i v a g u m <end>	<start> ADJ VOC NEUT SG h a r e n i v a g u s <end>
+<start> h a r ē n ō s u m <end>	<start> ADJ VOC NEUT SG h a r e n o s u s <end>
+<start> h a r u n d i n e u m <end>	<start> ADJ VOC NEUT SG h a r u n d i n e u s <end>
+<start> h a r u n d i n ō s u m <end>	<start> ADJ VOC NEUT SG h a r u n d i n o s u s <end>
+<start> h a r z i a n u m <end>	<start> ADJ VOC NEUT SG h a r z i a n u s <end>
+<start> h a s t ā t u m <end>	<start> ADJ VOC NEUT SG h a s t a t u s <end>
+<start> h a t t i c u m <end>	<start> ADJ VOC NEUT SG h a t t i c u s <end>
+<start> h a v a n e n s e <end>	<start> ADJ VOC NEUT SG h a v a n e n s i s <end>
+<start> h a w a i e n s e <end>	<start> ADJ VOC NEUT SG h a w a i e n s i s <end>
+<start> h a w a i i e n s e <end>	<start> ADJ VOC NEUT SG h a w a i i e n s i s <end>
+<start> h e b d o m a d ā l e <end>	<start> ADJ VOC NEUT SG h e b d o m a d a l i s <end>
+<start> h e b e i e n s e <end>	<start> ADJ VOC NEUT SG h e b e i e n s i s <end>
+<start> h e b e n i n u m <end>	<start> ADJ VOC NEUT SG h e b e n i n u s <end>
+<start> h e b e t i u s <end>	<start> ADJ VOC NEUT SG h e b e t i o r <end>
+<start> h e b r a e u m <end>	<start> ADJ VOC NEUT SG h e b r a e u s <end>
+<start> h e b r a i c u m <end>	<start> ADJ VOC NEUT SG h e b r a i c u s <end>
+<start> h e d e r i g e r u m <end>	<start> ADJ VOC NEUT SG h e d e r i g e r <end>
+<start> h e d e r ō s u m <end>	<start> ADJ VOC NEUT SG h e d e r o s u s <end>
+<start> h e i d e l b e r g e n s e <end>	<start> ADJ VOC NEUT SG h e i d e l b e r g e n s i s <end>
+<start> h e l v ē t i c u m <end>	<start> ADJ VOC NEUT SG h e l v e t i c u s <end>
+<start> h e m i p t e r u m <end>	<start> ADJ VOC NEUT SG h e m i p t e r u s <end>
+<start> h e n a n e n s e <end>	<start> ADJ VOC NEUT SG h e n a n e n s i s <end>
+<start> h ē p a t ā r i u m <end>	<start> ADJ VOC NEUT SG h e p a t a r i u s <end>
+<start> h ē p a t i c u m <end>	<start> ADJ VOC NEUT SG h e p a t i c u s <end>
+<start> h e r b e u m <end>	<start> ADJ VOC NEUT SG h e r b e u s <end>
+<start> h e r b i d u m <end>	<start> ADJ VOC NEUT SG h e r b i d u s <end>
+<start> h e r c u l e u m <end>	<start> ADJ VOC NEUT SG h e r c u l e u s <end>
+<start> h ē r ē d i t ā r i u m <end>	<start> ADJ VOC NEUT SG h e r e d i t a r i u s <end>
+<start> h e r ē m u m <end>	<start> ADJ VOC NEUT SG h e r e m u s <end>
+<start> h e r e t i c u m <end>	<start> ADJ VOC NEUT SG h e r e t i c u s <end>
+<start> h ē r ō i c u m <end>	<start> ADJ VOC NEUT SG h e r o i c u s <end>
+<start> P a l ā t ī n u m <end>	<start> ADJ VOC NEUT SG P a l a t i n u s <end>
+<start> h e s p e r u m <end>	<start> ADJ VOC NEUT SG h e s p e r u s <end>
+<start> h e s t e r n u m <end>	<start> ADJ VOC NEUT SG h e s t e r n u s <end>
+<start> h e t e r ō c l i t u m <end>	<start> ADJ VOC NEUT SG h e t e r o c l i t u s <end>
+<start> h e t e r o g e n e u m <end>	<start> ADJ VOC NEUT SG h e t e r o g e n e u s <end>
+<start> h e t e r o p h y l l u m <end>	<start> ADJ VOC NEUT SG h e t e r o p h y l l u s <end>
+<start> h e t t h a e u m <end>	<start> ADJ VOC NEUT SG h e t t h a e u s <end>
+<start> h e t t h e i c u m <end>	<start> ADJ VOC NEUT SG h e t t h e i c u s <end>
+<start> h e x a g o n u m <end>	<start> ADJ VOC NEUT SG h e x a g o n u s <end>
+<start> h e x a s t i c h u m <end>	<start> ADJ VOC NEUT SG h e x a s t i c h u s <end>
+<start> h i b e r n i c u m <end>	<start> ADJ VOC NEUT SG h i b e r n i c u s <end>
+<start> h i b ē r n o n o r m a n n i c u m <end>	<start> ADJ VOC NEUT SG h i b e r n o n o r m a n n i c u s <end>
+<start> h ī b e r n u m <end>	<start> ADJ VOC NEUT SG h i b e r n u s <end>
+<start> h i b r i d u m <end>	<start> ADJ VOC NEUT SG h i b r i d u s <end>
+<start> h i e m ā l e <end>	<start> ADJ VOC NEUT SG h i e m a l i s <end>
+<start> h i e r i c u n t i n u m <end>	<start> ADJ VOC NEUT SG h i e r i c u n t i n u s <end>
+<start> h i e r o g l y p h i c u m <end>	<start> ADJ VOC NEUT SG h i e r o g l y p h i c u s <end>
+<start> h i e r o g r a p h i c u m <end>	<start> ADJ VOC NEUT SG h i e r o g r a p h i c u s <end>
+<start> h i e r o s o l y m ī t ā n u m <end>	<start> ADJ VOC NEUT SG h i e r o s o l y m i t a n u s <end>
+<start> h i l a r i u s <end>	<start> ADJ VOC NEUT SG h i l a r i o r <end>
+<start> h i l a r u m <end>	<start> ADJ VOC NEUT SG h i l a r u s <end>
+<start> h i m a l a y a n u m <end>	<start> ADJ VOC NEUT SG h i m a l a y a n u s <end>
+<start> h i m a l a y e n s e <end>	<start> ADJ VOC NEUT SG h i m a l a y e n s i s <end>
+<start> h i n d i c u m <end>	<start> ADJ VOC NEUT SG h i n d i c u s <end>
+<start> h i n n i b u n d u m <end>	<start> ADJ VOC NEUT SG h i n n i b u n d u s <end>
+<start> h i r n i ō s u m <end>	<start> ADJ VOC NEUT SG h i r n i o s u s <end>
+<start> h ī r s ū t u m <end>	<start> ADJ VOC NEUT SG h i r s u t u s <end>
+<start> h i r t e l l u m <end>	<start> ADJ VOC NEUT SG h i r t e l l u s <end>
+<start> h ī r t u m <end>	<start> ADJ VOC NEUT SG h i r t u s <end>
+<start> h i s p ā n i c u m <end>	<start> ADJ VOC NEUT SG h i s p a n i c u s <end>
+<start> h i s p i d u l u m <end>	<start> ADJ VOC NEUT SG h i s p i d u l u s <end>
+<start> h i s p i d u m <end>	<start> ADJ VOC NEUT SG h i s p i d u s <end>
+<start> h i s t o l y t i c u m <end>	<start> ADJ VOC NEUT SG h i s t o l y t i c u s <end>
+<start> h i s t o r i c u m <end>	<start> ADJ VOC NEUT SG h i s t o r i c u s <end>
+<start> h i s t r i ā t u m <end>	<start> ADJ VOC NEUT SG h i s t r i a t u s <end>
+<start> h i s t r i ō n ā l e <end>	<start> ADJ VOC NEUT SG h i s t r i o n a l i s <end>
+<start> h i s t r i ō n i c u m <end>	<start> ADJ VOC NEUT SG h i s t r i o n i c u s <end>
+<start> h i u l c u m <end>	<start> ADJ VOC NEUT SG h i u l c u s <end>
+<start> h o d i e r n u m <end>	<start> ADJ VOC NEUT SG h o d i e r n u s <end>
+<start> h o l a r c t i c u m <end>	<start> ADJ VOC NEUT SG h o l a r c t i c u s <end>
+<start> h o l e r ā c e u m <end>	<start> ADJ VOC NEUT SG h o l e r a c e u s <end>
+<start> h o l o p h y l l u m <end>	<start> ADJ VOC NEUT SG h o l o p h y l l u s <end>
+<start> h o l o s ē r i c u m <end>	<start> ADJ VOC NEUT SG h o l o s e r i c u s <end>
+<start> h o m ē r i ā c u m <end>	<start> ADJ VOC NEUT SG h o m e r i a c u s <end>
+<start> h o m ē r i c u m <end>	<start> ADJ VOC NEUT SG h o m e r i c u s <end>
+<start> h o m ē r i u m <end>	<start> ADJ VOC NEUT SG h o m e r i u s <end>
+<start> h o m o g e n e u m <end>	<start> ADJ VOC NEUT SG h o m o g e n e u s <end>
+<start> h o n d u r e n s e <end>	<start> ADJ VOC NEUT SG h o n d u r e n s i s <end>
+<start> h o n e s t i u s <end>	<start> ADJ VOC NEUT SG h o n e s t i o r <end>
+<start> h o n e s t i s s i m u m <end>	<start> ADJ VOC NEUT SG h o n e s t i s s i m u s <end>
+<start> h o n ō r ā b i l i u s <end>	<start> ADJ VOC NEUT SG h o n o r a b i l i o r <end>
+<start> h o n ō r ā b i l e <end>	<start> ADJ VOC NEUT SG h o n o r a b i l i s <end>
+<start> h o n ō r ā r i u m <end>	<start> ADJ VOC NEUT SG h o n o r a r i u s <end>
+<start> h o n ō r ā t i u s <end>	<start> ADJ VOC NEUT SG h o n o r a t i o r <end>
+<start> h o n ō r i f i c e n t i s s i m u m <end>	<start> ADJ VOC NEUT SG h o n o r i f i c e n t i s s i m u s <end>
+<start> h o n ō r i f i c u m <end>	<start> ADJ VOC NEUT SG h o n o r i f i c u s <end>
+<start> h o n ō r i g e r u m <end>	<start> ADJ VOC NEUT SG h o n o r i g e r <end>
+<start> h o r d e ā c e u m <end>	<start> ADJ VOC NEUT SG h o r d e a c e u s <end>
+<start> h o r d ē i u m <end>	<start> ADJ VOC NEUT SG h o r d e i u s <end>
+<start> h o r d i ā c i u m <end>	<start> ADJ VOC NEUT SG h o r d i a c i u s <end>
+<start> h o r d i ā r i u m <end>	<start> ADJ VOC NEUT SG h o r d i a r i u s <end>
+<start> h o r ī z o n t ā l e <end>	<start> ADJ VOC NEUT SG h o r i z o n t a l i s <end>
+<start> h o r n ō t i n u m <end>	<start> ADJ VOC NEUT SG h o r n o t i n u s <end>
+<start> h ō r n u m <end>	<start> ADJ VOC NEUT SG h o r n u s <end>
+<start> h o r r e n d u m <end>	<start> ADJ VOC NEUT SG h o r r e n d u s <end>
+<start> h o r r i b i l i u s <end>	<start> ADJ VOC NEUT SG h o r r i b i l i o r <end>
+<start> h o r r i b i l i s s i m u m <end>	<start> ADJ VOC NEUT SG h o r r i b i l i s s i m u s <end>
+<start> h o r r i d i u s <end>	<start> ADJ VOC NEUT SG h o r r i d i o r <end>
+<start> h o r r i f i c u m <end>	<start> ADJ VOC NEUT SG h o r r i f i c u s <end>
+<start> h o r r i s o n u m <end>	<start> ADJ VOC NEUT SG h o r r i s o n u s <end>
+<start> h o r t e n s e <end>	<start> ADJ VOC NEUT SG h o r t e n s i s <end>
+<start> h o s p i t ā l i s s i m u m <end>	<start> ADJ VOC NEUT SG h o s p i t a l i s s i m u s <end>
+<start> h o s p i t ī v u m <end>	<start> ADJ VOC NEUT SG h o s p i t i v u s <end>
