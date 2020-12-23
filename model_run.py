@@ -1,3 +1,6 @@
+from google.colab import drive
+drive.mount('/content/drive')
+
 # basic imports
 import tensorflow as tf
 
@@ -78,7 +81,7 @@ def load_dataset(infile, n=None):
   return intensor, targtensor, intokenizer, targtokenizer
 
 # file path
-filepath = '/content/drive/My Drive/Linguistics/Morpheme_Ordering'
+filepath = '/content/drive/My Drive/Linguistics/morpheme-order'
 
 # choose language
 language = 'test'
@@ -86,6 +89,9 @@ language = 'test'
 # paths to language and features
 languagefile_io = os.path.join(filepath, language, f'{language}.txt')
 featsfile_io = os.path.join(filepath, language, 'featuresfile.txt')
+
+# define softmax
+softmax = tf.keras.layers.Softmax()
 
 # creates file with all feature combinations in language
 with open(languagefile_io, 'r') as languagefile:
@@ -187,38 +193,6 @@ def loss_function(real, pred):
 
     return tf.reduce_mean(loss_)
 
-# training function
-@tf.function
-def train_step(inp, targ, enc_hidden):
-    loss = 0
-
-    with tf.GradientTape() as tape:
-        enc_output, enc_hidden = encoder(inp, enc_hidden)
-
-        dec_hidden = enc_hidden
-
-        dec_input = tf.expand_dims([targmorphs.word_index['<start>']] * BATCH_SIZE, 1)
-
-        # teacher forcing
-        for t in range(1, targ.shape[1]):
-            # passing enc_output to the decoder
-            predictions, dec_hidden, _ = decoder(dec_input, dec_hidden, enc_output)
-
-            loss += loss_function(targ[:, t], predictions)
-
-            # using teacher forcing
-            dec_input = tf.expand_dims(targ[:, t], 1)
-
-    batch_loss = (loss / int(targ.shape[1]))
-
-    variables = encoder.trainable_variables + decoder.trainable_variables
-
-    gradients = tape.gradient(loss, variables)
-
-    optimizer.apply_gradients(zip(gradients, variables))
-
-    return batch_loss
-
 # gets the most likely output given features
 def evaluate(features):
     # preprocessing (create list based on features split by space)
@@ -257,11 +231,10 @@ def evaluate(features):
     return result
 
 def get_fusion(features, word):
-    softmax = tf.keras.layers.Softmax()
-
     # converts word to chars
     wordlist = list(word)
     wordlist.append('<end>')
+    form_logits_arr = []
     
     inputs = [infeats.word_index[i] for i in features.split(' ')]
     inputs = tf.keras.preprocessing.sequence.pad_sequences([inputs],
@@ -288,11 +261,12 @@ def get_fusion(features, word):
         logits_arr = np.asarray(predictions[0])
 
         # turns logits into probs w/ softmax, gets prob of token
-        probs_arr = softmax(logits_arr).numpy()
-        prob_char = probs_arr[word_id]
+        # probs_arr = softmax(logits_arr).numpy()
+        logits_char = logits_arr[word_id]
 
         # adds to surprisal
-        word_surprisal += -np.log2(prob_char)
+        form_logits_arr.append(logits_char)
+        # word_surprisal += -np.log2(prob_char)
 
         if word[t] == '<end>':
             return word_surprisal
@@ -301,11 +275,6 @@ def get_fusion(features, word):
         dec_input = tf.expand_dims([word_id], 0)
 
     return word_surprisal
-
-mean_surp_list = []
-med_surp_list = []
-pstdev_surp_list = []
-sstdev_surp_list = []
 
 featureslist = []
 
@@ -317,8 +286,40 @@ with open(featsfile, 'r') as featsfile:
 
 featsfile = str(featsfile)
 
-# iterates through every set of features in language, and trains individual models
+# iterates through every set of features and trains individual models
 for trainfeats in featureslist:
+    # training function (putting it in the loop fixes the precondition error)
+    @tf.function
+    def train_step(inp, targ, enc_hidden):
+        loss = 0
+
+        with tf.GradientTape() as tape:
+            enc_output, enc_hidden = encoder(inp, enc_hidden)
+
+            dec_hidden = enc_hidden
+
+            dec_input = tf.expand_dims([targmorphs.word_index['<start>']] * BATCH_SIZE, 1)
+
+            # teacher forcing
+            for t in range(1, targ.shape[1]):
+                # passing enc_output to the decoder
+                predictions, dec_hidden, _ = decoder(dec_input, dec_hidden, enc_output)
+
+                loss += loss_function(targ[:, t], predictions)
+
+                # using teacher forcing
+                dec_input = tf.expand_dims(targ[:, t], 1)
+
+        batch_loss = (loss / int(targ.shape[1]))
+
+        variables = encoder.trainable_variables + decoder.trainable_variables
+
+        gradients = tape.gradient(loss, variables)
+
+        optimizer.apply_gradients(zip(gradients, variables))
+
+        return batch_loss
+    
     print(f'Currently on {trainfeats}')
     # file path for model
     modelfile = '_'.join(trainfeats)
@@ -398,18 +399,18 @@ for trainfeats in featureslist:
         
         # early stopping
         percent_loss = 1 - total_loss/prev_loss
-        if (percent_loss <= 0.15):
+        if (percent_loss <= 0):
             print(f'Stopped training on Epoch {epoch+1}, with {percent_loss*100}% difference in loss from Epoch {epoch}\nAverage Loss: {total_loss / steps_per_epoch}')
             break
         
+        # saving the model
+        checkpoint.save(file_prefix = checkpoint_prefix)
         print(f'Epoch: {epoch+1}, Average Loss: {total_loss / steps_per_epoch}')
         print(f'Time taken for epoch: {time.time() - start} sec\n')
 
-    # saving the model (saves last weights only)
-    checkpoint.save(file_prefix = checkpoint_prefix)
 
-    # restores model
-    # checkpoint.restore(tf.train.latest_checkpoint(checkpoint_dir))
+    # restores latest model
+    checkpoint.restore(tf.train.latest_checkpoint(checkpoint_dir))
 
     testfile = str(testfile_io)
     resultsfile = str(resultsfile_io)
@@ -443,8 +444,9 @@ for trainfeats in featureslist:
 
             expected_form = evaluate(featstring)
             form_surp = get_fusion(featstring, correct_form)
-            
-            resultsfile.write(f'{correct_form}\t{expected_form}\t{form_surp}\n')
+            pred_surp = get_fusion(featstring, expected_form)
+
+            resultsfile.write(f'{correct_form}\t{expected_form}\t{form_surp}\t{pred_surp}\n')
             if (i % 1000 == 0):
                 print(f'Row {i}, word {correct_form}, surprisal: {form_surp}, time taken: {time.time() - start}')
             
@@ -452,14 +454,12 @@ for trainfeats in featureslist:
 
         mean_surp_form = statistics.mean(fusion_list)
         med_surp_form = statistics.median(fusion_list)
-        sstdev_surp_form = statistics.stdev(fusion_list)
-        pstdev_surp_form = statistics.pstdev(fusion_list)
-
-        mean_surp_list.append(mean_surp_form)
-        med_surp_list.append(med_surp_form)
-        sstdev_surp_list.append(sstdev_surp_form)
-        pstdev_surp_list.append(pstdev_surp_form)
+        stdev_surp_form = statistics.stdev(fusion_list)
 
         print(f'Completed surprisal calculations for {trainfeats}, moving to next combination.\n')
 
         resultsfile.close()
+
+    surpfile = os.path.join(filepath, language, f'{language}_surprisals.txt')
+    with open(surpfile, 'a') as surpfile:
+        surpfile.write(f'{";".join(trainfeats)}\t{mean_surp_form}\t{med_surp_form}\t{stdev_surp_form}\n')
