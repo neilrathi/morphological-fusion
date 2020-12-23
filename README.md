@@ -13,12 +13,12 @@ Code for morpheme ordering study.
 For Latin, it takes ~7.5 minutes to create surprisal files for each word within each feature combination for verbs, ~15 for adjectives, and ~30 for nouns. It takes ~2.5 seconds per word to compute surprisal and predict the most likely form. For each feature combination, there are ~2400 forms for verbs, ~4000 for adjectives, and ~8400 for nouns.
 
 ## To-do
-* Derived forms
+* ~~Derived forms~~ (unsure if necessary)
 * Beam search for top-k
-* Fix `FailedPreconditionError` in `model_run.py`
 
 ## Completed
 * Surprisal of forms
 * Reduced runtime w/ early stopping
 * Created results files
 * Model saving
+* Fix `FailedPreconditionError` in `model_run.py`
