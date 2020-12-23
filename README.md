@@ -4,7 +4,7 @@ Code for morpheme ordering study.
 ## Directory
 * `saved_models` contains the saved model weights for models trained on each feature combination (not in github because files are ~151 MB)
 * `model.py` is the actual python code for running and training one model
-* `model_run.py` is the same as `model.py`, but it iterates through all features in a language
+* `model_run.py` is the same as `model.py`, but it iterates through all features in a language (now works!)
 * `lat`, `hun`, etc. contain `train` files, `test` files, and `results` files for each feature combination (organized into folders)
 * `language_surprisals.txt` contains mean and median surprisal values for each form in a language
 * `full_word_features` and `no_lemma_lat` are old model files
@@ -15,10 +15,11 @@ For Latin, it takes ~7.5 minutes to create surprisal files for each word within 
 ## To-do
 * ~~Derived forms~~ (unsure if necessary)
 * Beam search for top-k
+* Improve runtime by calling softmax only once at the end of loop
 
 ## Completed
 * Surprisal of forms
-* Reduced runtime w/ early stopping
+* Reduced runtime w/ early stopping (fixed)
 * Created results files
 * Model saving
 * Fix `FailedPreconditionError` in `model_run.py`
