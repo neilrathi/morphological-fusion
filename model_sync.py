@@ -17,13 +17,13 @@ import csv
 import statistics
 
 # specify features for model
-trainfeats = ['N', 'DAT', 'PL']
+trainfeats = ['N', 'PRP', 'PL']
 
 # file path
 filepath = '/content/drive/My Drive/Linguistics/Morpheme_Ordering'
 
 # choose language
-language = 'lat'
+language = 'hun_test'
 
 # paths to language and features
 languagefile_io = os.path.join(filepath, language, f'{language}.txt')
@@ -67,126 +67,43 @@ checkpoint_dir = os.path.join(filepath, 'saved_models', language, f'{modelfile}_
 if not os.path.exists(checkpoint_dir):
     os.makedirs(checkpoint_dir)
 
-def sync_forms(infile, features):
-    features_semi = ';'.join(features)
-    lem_list = []
-    form_list = []
-    feats_seen = []
-    sync_feats = {}
-    nonsync_feats = {}
-    percent_sync = {}
-    i = 0
-    
-    with open(infile, 'r') as csvfile:
-        csvreader = csv.reader(csvfile, delimiter='\t')
-        for row in csvreader:
-            if not row:
-                continue
-            
-            rowfeats = row[2].split(';')
-            
-            if rowfeats[0] != features[0]:
-                continue
-            
-            if 'cur_lem' not in locals():
-                cur_lem = row[0]
-            
-            if (row[1] not in form_list) and (row[2] == features_semi) and (row[0] not in lem_list):
-                lem_list.append(row[0])
-                form_list.append(row[1])
-
-            if cur_lem != row[0]:
-                if features_semi not in feats_seen:
-                    lem_list.pop()
-                    form_list.pop()
-                feats_seen = []
-            feats_seen.append(row[2])
-            cur_lem = row[0]
-    with open(infile, 'r') as csvfile:
-        csvreader = csv.reader(csvfile, delimiter='\t')
-        for row in csvreader:
-            if not row:
-                continue
-            
-            rowfeats = row[2].split(';')
-
-            if row[0] not in lem_list:
-                continue
-            if row[0] != lem_list[i]:
-                i += 1
-            if (row[1] == form_list[i]) and (row[2] != features_semi):
-                if row[2] not in sync_feats:
-                    sync_feats[row[2]] = 1
-                else:
-                    sync_feats[row[2]] += 1
-            elif (row[1] != form_list[i]) and (row[2] != features_semi):
-                if row[2] not in nonsync_feats:
-                    nonsync_feats[row[2]] = 1
-                else:
-                    nonsync_feats[row[2]] += 1
-    for feat in nonsync_feats:
-        if feat in sync_feats:
-            percent_sync[feat] = float(sync_feats[feat])/(sync_feats[feat] + nonsync_feats[feat])
-        else:
-            percent_sync[feat] = 0
-    return percent_sync
-
-print(sync_forms(languagefile, trainfeats))
-
 # generates a training file from unimorph data
 # only trains on subsets with numfeats or more combinations, not including lemma
-
-def subsets(infile, trainfile, testfile, features, numfeats, per_sync, syncretism=True):
-    feats_seen = {}
-    sync_feats = {}
-    lem_list = []
-    form_list = []
-    nonsync_feats = {}
-    features_semi = ';'.join(features)
-    percent_sync = sync_forms(infile, features)
-
-    with open(infile, 'r') as csvfile:
-        csvreader = csv.reader(csvfile, delimiter='\t')
+# also gets rid of identical forms
+def subsets_sync(infile, trainfile, testfile, features, numfeats):
+    cur_forms = {} # a dictionary with forms and features of the current lemma
+    cur_lem = '' # the current lemma
+    with open(infile, 'r') as csvfile1:
+        csvreader1 = csv.reader(csvfile1, delimiter='\t')
+        for row in csvreader1:
+            cur_lem = row[0]
+            break
+    with open(infile, 'r') as csvfile2:
+        csvreader2 = csv.reader(csvfile2, delimiter='\t')
         trainset = open(trainfile, 'w')
         testset = open(testfile, 'w')
-        for row in csvreader:
+
+        for row in csvreader2:
             if not row:
                 continue
-
-            # splits annotations at ;
+            
             rowfeats = row[2].split(';')
-
             if (rowfeats[0] != features[0]):
                 continue
+            
+            if cur_lem != row[0]:
+                for feats in cur_forms:
+                    charword = ' '.join(list(cur_forms[feats]))
+                    lem_string = ' '.join(list(cur_lem))
+                    if feats == (' '.join(trainfeats)):
+                        testset.write(f'<start> {charword.lower()} <end>\t<start> {lem_string} {feats} <end>\n')
+                    elif ' '.join(trainfeats) not in cur_forms:
+                        trainset.write(f'<start> {charword.lower()} <end>\t<start> {lem_string} {feats} <end>\n')
+                    elif cur_forms[(' '.join(trainfeats))] != cur_forms[feats]:
+                        trainset.write(f'<start> {charword.lower()} <end>\t<start> {lem_string} {feats} <end>\n')
 
-            # creates set versions
-            rowset = set(rowfeats)
-            featset = set(features)                    
-
-            # gets rid of multi-word forms
-            if ' ' in row[0]:
-                continue
-
-            # turns words/features into strings
-            charword = ' '.join(list(row[1]))
-            rowfeats_string = ' '.join(rowfeats)
-            lemma_list = list(row[0])
-            lemma_string = ' '.join(lemma_list)
-
-            if syncretism == False:
-                # if they are not equal, but do intersect, add to training set
-                if (rowset == featset):
-                    testset.write(f'<start> {charword} <end>\t<start> {rowfeats_string} {lemma_string} <end>\n')
-                elif (percent_sync[row[2]] < per_sync):
-                    trainset.write(f'<start> {charword} <end>\t<start> {rowfeats_string} {lemma_string} <end>\n')
-                if row[2] == 'N;ABL;PL':
-                    print('aha')
-            else:
-                if (rowset == featset):
-                    testset.write(f'<start> {charword} <end>\t<start> {rowfeats_string} {lemma_string} <end>\n')
-                else:
-                    trainset.write(f'<start> {charword} <end>\t<start> {rowfeats_string} {lemma_string} <end>\n')
-
+            cur_forms[' '.join(rowfeats)] = row[1]
+            cur_lem = row[0]
         trainset.close()
         testset.close()
 
@@ -198,7 +115,7 @@ def morphpairs(infile, n):
 
 # tokenizing
 def tokenize(lang):
-    lang_tokenizer = tf.keras.preprocessing.text.Tokenizer(filters='')
+    lang_tokenizer = tf.keras.preprocessing.text.Tokenizer(filters='', lower=False)
     lang_tokenizer.fit_on_texts(lang)
     tensor = lang_tokenizer.texts_to_sequences(lang)
 
@@ -219,7 +136,7 @@ languagefile = str(languagefile_io)
 featsfile = str(featsfile_io)
 
 # create training and test files
-subsets(languagefile, trainfile, testfile_io, trainfeats, 2, 0.6, syncretism=False)
+subsets_sync(languagefile, trainfile, testfile_io, trainfeats, 2)
 
 # creates morphpair dataset from training and test files
 lang, feats = morphpairs(trainfile, None)
@@ -445,7 +362,6 @@ def get_fusion(features, word):
 
     # converts word to chars
     wordlist = list(word)
-    #wordlist.insert(0, '<start>')
     wordlist.append('<end>')
     
     inputs = [infeats.word_index[i] for i in features.split(' ')]
@@ -493,7 +409,7 @@ def get_fusion(features, word):
 def plot_attention(attention, features, form):
     fig = plt.figure(figsize=(10,10))
     ax = fig.add_subplot(1, 1, 1)
-    ax.matshow(attention, cmap='binary')
+    ax.matshow(attention, cmap='viridis')
     fontdict = {'fontsize': 14}
     ax.set_xticklabels([''] + features, fontdict=fontdict, rotation=90)
     ax.set_yticklabels([''] + form, fontdict=fontdict)
@@ -503,64 +419,18 @@ def plot_attention(attention, features, form):
 
     plt.show()
 
-def get_attention(features, form):
+def get_att_plot(features, form):
     surprisal, attention_plot = get_fusion(features, form)
     form_list = list(form)
-    #form_list.insert(0, '<start>')
     form_list.append('<end>')
     form_chars = ' '.join(form_list)
     attention_plot = attention_plot[:len(form_chars.split(' ')), :len(features.split(' '))]
     plot_attention(attention_plot, features.split(' '), form_chars.split(' '))
 
-get_attention('<start> n dat pl g r a v e d o <end>', 'gravēdinibus')
-
-# restores model
-checkpoint.restore(tf.train.latest_checkpoint(checkpoint_dir))
-
-testfile = str(testfile_io)
-resultsfile = str(resultsfile_io)
-
-with open(testfile, 'r') as testfile:
-    testreader = csv.reader(testfile, delimiter='\t')
-    resultsfile = open(resultsfile, 'w')
-
-    resultsfile.write('Correct Form\tSurprisal\n')
-
-    fusion_list = []
-
-    i = 0
-
-    for row in testreader:
-        start = time.time()
-        if not row:
-            continue
-
-        i += 1
-        correct_list = row[0].split(' ')
-
-        # remove start and end tokens
-        correct_list.pop(0)
-        correct_list.pop()
-
-        correct_form = ''.join(correct_list)
-        correct_form = correct_form.lower()
-        
-        features_list = row[1].split(' ')
-        featstring = ' '.join(features_list)
-        featstring = featstring.lower()
-
-        form_surp = get_fusion(featstring, correct_form)
-        
-        resultsfile.write(f'{correct_form}\t{form_surp}\n')
-
-        if (i % 1000 == 0):
-            print(f'Row {i}, word {correct_form}, surprisal: {form_surp}, time taken: {time.time() - start} sec')
-        
-        fusion_list.append(form_surp)
-
-    mean_surp_form = statistics.mean(fusion_list)
-    med_surp_form = statistics.median(fusion_list)
-    sstdev_surp_form = statistics.stdev(fusion_list)
-    pstdev_surp_form = statistics.pstdev(fusion_list)
-
-    resultsfile.close()
+get_att_plot('<start> g r a v i t á c i ó N PRP PL <end>', 'gravitációkért')
+surp, att = get_fusion('<start> g r a v i t á c i ó N PRP PL <end>', 'gravitációkért')
+result = evaluate('<start> g r a v i t á c i ó N PRP PL <end>')
+surp1, att2 = get_fusion('<start> g r a v i t á c i ó N PRP PL <end>', result)
+print('Surprisal of correct form:', surp)
+print('Expected Form:', result)
+print('Surprisal of expected form:', surp1)
