@@ -64,14 +64,15 @@ def subsets_sync(infile, trainfile, testfile, features, numfeats):
             
             if cur_lem != row[0]:
                 for feats in cur_forms:
-                    charword = ' '.join(list(cur_forms[feats]))
-                    lem_string = ' '.join(list(cur_lem))
-                    if feats == (' '.join(trainfeats)):
-                        testset.write(f'<start> {charword.lower()} <end>\t<start> {lem_string} {feats} <end>\n')
-                    elif ' '.join(trainfeats) not in cur_forms:
-                        trainset.write(f'<start> {charword.lower()} <end>\t<start> {lem_string} {feats} <end>\n')
-                    elif cur_forms[(' '.join(trainfeats))] != cur_forms[feats]:
-                        trainset.write(f'<start> {charword.lower()} <end>\t<start> {lem_string} {feats} <end>\n')
+                    if ' ' not in cur_forms[feats]:
+                        charword = ' '.join(list(cur_forms[feats]))
+                        lem_string = ' '.join(list(cur_lem))
+                        if feats == (' '.join(trainfeats)):
+                            testset.write(f'<start> {charword.lower()} <end>\t<start> {lem_string} {feats} <end>\n')
+                        elif ' '.join(trainfeats) not in cur_forms:
+                            trainset.write(f'<start> {charword.lower()} <end>\t<start> {lem_string} {feats} <end>\n')
+                        elif cur_forms[(' '.join(trainfeats))] != cur_forms[feats]:
+                            trainset.write(f'<start> {charword.lower()} <end>\t<start> {lem_string} {feats} <end>\n')
 
             cur_forms[' '.join(rowfeats)] = row[1]
             cur_lem = row[0]
