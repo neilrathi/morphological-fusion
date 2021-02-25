@@ -6,6 +6,6 @@ Code for the model is stored here
 
 To run `model_run.py`, execute the following in the command line:
 ```
-python model_run.py --filepath ../langdata/ --lang lat --embedding 128 --units 512 --batch 512 --learnrate 0.001
+python model_run.py --filepath ../langdata/ --lang lat --lastfeat 'ADJ;ACC;MASC;SG' --embedding 128 --units 512 --batch 512 --learnrate 0.001
 ```
-where `filepath` is the location of the language folder (i.e. `langdata` should have subfolders `lat`, `hun`, etc. with Unimorph files `lat`, `hun`, etc.). Default hyperparameters are `units = 512`, `embedding_dim = 128`, `BATCH_SIZE = 512`, and `learnrate = 0.001`.
+where `filepath` is the location of the language folder (i.e. `langdata` should have subfolders `lat`, `hun`, etc. with Unimorph files `lat`, `hun`, etc.). Default hyperparameters are `units = 512`, `embedding_dim = 128`, `BATCH_SIZE = 512`, and `learnrate = 0.001`. The `lastfeat` parameter is optional, and can be used to specify the last feature that was trained (for continuing training).
