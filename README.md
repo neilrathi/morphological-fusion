@@ -2,16 +2,15 @@
 Code for morphological fusion study.
 
 ## Directory
-* `saved_models` contains the saved model weights for models trained on each feature combination (not in github because files are ~151 MB)
+* `src` contains the code for training/testing a model (either on one language or one feature combination)
+* `plots` contains various plots (attention and loss) from training
 * `model.py` is the actual python code for running and training one model
-* `model_run.py` is the same as `model.py`, but it iterates through all features in a language (now works!)
+* `model_run.py` is the same as `model.py`, but it iterates through all features in a language
 * `lat`, `hun`, etc. contain `train` files, `test` files, and `results` files for each feature combination (organized into folders)
 * `language_surprisals.txt` contains mean and median surprisal values for each form in a language
-* `plots` contains attention and loss plots for some features
-* `full_word_features` and `no_lemma_lat` are old model files
 
 ## To-do
-* Improve runtime by calling softmax only once at the end of loop
+* Run code on multiple languages
 
 ## Completed
 * Surprisal of forms
