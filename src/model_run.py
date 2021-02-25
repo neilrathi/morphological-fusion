@@ -11,10 +11,11 @@ import numpy as np
 parser = argparse.ArgumentParser()
 parser.add_argument('--filepath', type=str, help='directory where files are located')
 parser.add_argument('--lang', type=str, help='name of language for training')
+parser.add_argument('--lastfeat', type=str, help='last feature combination trained')
 parser.add_argument('--embedding', type=int, help='embedding dimension')
 parser.add_argument('--units', type=int, help='units')
 parser.add_argument('--batch', type=int, help='batch size')
-parser.add_argument('--learnrate', type=int, help='learning rate')
+parser.add_argument('--learnrate', type=float, help='learning rate')
 args = parser.parse_args()
 
 # file path
@@ -32,6 +33,7 @@ units = 512
 embedding_dim = 128
 BATCH_SIZE = 512
 learning_rate = 0.001
+
 if args.embedding:
     embedding_dim = args.embedding
 if args.units:
@@ -40,6 +42,9 @@ if args.batch:
     BATCH_SIZE = args.batch
 if args.learnrate:
     learning_rate = args.learnrate
+
+if args.lastfeat:
+    last_feat_trained = args.lastfeat
 
 def subsets_sync(infile, trainfile, testfile, features, numfeats):
     cur_forms = {} # a dictionary with forms and features of the current lemma
@@ -326,6 +331,12 @@ with open(featsfile, 'r') as featsfile:
     for row in featsreader:
         rowfeats = row[0].split(';')
         featureslist.append(rowfeats)
+
+if args.lastfeat:
+    lastfeatlist = last_feat_trained.split('-')
+    last_index = featureslist.index(lastfeatlist)
+    for i in range(0, last_index+1):
+        featureslist.pop(0)
 
 featsfile = str(featsfile)
 
