@@ -12,6 +12,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--filepath', type=str, help='directory where files are located')
 parser.add_argument('--lang', type=str, help='name of language for training')
 parser.add_argument('--lastfeat', type=str, help='last feature combination trained')
+parser.add_argument('--ignore', type=str, help='features to ignore')
 parser.add_argument('--embedding', type=int, help='embedding dimension')
 parser.add_argument('--units', type=int, help='units')
 parser.add_argument('--batch', type=int, help='batch size')
@@ -27,6 +28,9 @@ language = args.lang
 # paths to language and features
 languagefile_io = os.path.join(filepath, language, language)
 featsfile_io = os.path.join(filepath, language, 'featuresfile.txt')
+resultspath = os.path.join(filepath, language, 'results')
+if not os.path.exists(resultspath):
+    os.makedirs(resultspath)
 
 # hyperparameters
 units = 512
@@ -329,14 +333,20 @@ first_feats = []
 with open(featsfile, 'r') as featsfile:
     featsreader = csv.reader(featsfile, delimiter = '\t')
     for row in featsreader:
-        rowfeats = row[0].split(';')
-        featureslist.append(rowfeats)
+        if row[0] != '----':
+            rowfeats = row[0].split(';')
+            featureslist.append(rowfeats)
 
 if args.lastfeat:
-    lastfeatlist = last_feat_trained.split('-')
+    lastfeatlist = last_feat_trained.split(';')
     last_index = featureslist.index(lastfeatlist)
     for i in range(0, last_index+1):
         featureslist.pop(0)
+
+if args.ignore:
+    ignore = args.ignore
+    for ignorefeat in ignore.split(':'):
+        featureslist.remove(ignorefeat.split(';'))
 
 featsfile = str(featsfile)
 
@@ -391,7 +401,7 @@ for trainfeats in featureslist:
 
     trainfile = os.path.join(filepath, language, modelfile, f'{modelfile}_train.txt')
     testfile_io = os.path.join(filepath, language, modelfile, f'{modelfile}_test.txt')
-    resultsfile_io = os.path.join(filepath, language, modelfile, f'{modelfile}_results.txt')
+    resultsfile_io = os.path.join(filepath, language, 'results', f'{modelfile}_results.txt')
     
     languagefile = str(languagefile_io)
     featsfile = str(featsfile_io)
@@ -402,7 +412,11 @@ for trainfeats in featureslist:
 
     # creates morphpair dataset from training and test files
     lang, feats = morphpairs(trainfile, None)
-    lang_test, feats_test = morphpairs(testfile_io, None)
+    try:
+        lang_test, feats_test = morphpairs(testfile_io, None)
+    except ValueError:
+        print('ValueError: features set is empty, moving on to next combination.')
+        continue
 
     # loads dataset, creates tensors
     intensor, targtensor, infeats, targmorphs = load_dataset(trainfile, None)
@@ -461,51 +475,52 @@ for trainfeats in featureslist:
     resultsfile = str(resultsfile_io)
 
     print(f'Calculating surprisals...\n')
-    with open(testfile, 'r') as testfile:
-        testreader = csv.reader(testfile, delimiter='\t')
-        resultsfile = open(resultsfile, 'w')
-
-        resultsfile.write('Correct Form\tSurprisal\n')
-
-        fusion_list = []
-        i = 0
-        for row in testreader:
-            if not row:
-                continue
-            start = time.time()
+    with tf.device('/GPU:0'):
+        with open(testfile, 'r') as testfile:
+            testreader = csv.reader(testfile, delimiter='\t')
+            resultsfile = open(resultsfile, 'w')
             
-            i += 1
-            correct_list = row[0].split(' ')
+            resultsfile.write('Correct Form\tSurprisal\n')
 
-            # remove start and end tokens
-            correct_list.pop(0)
-            correct_list.pop()
+            fusion_list = []
+            i = 0
+            for row in testreader:
+                if not row:
+                    continue
+                start = time.time()
+                
+                i += 1
+                correct_list = row[0].split(' ')
 
-            correct_form = ''.join(correct_list)
-            correct_form = correct_form.lower()
-            
-            features_list = row[1].split(' ')
-            featstring = ' '.join(features_list)
+                # remove start and end tokens
+                correct_list.pop(0)
+                correct_list.pop()
 
-            if not first_form:
-                first_form.append(correct_form)
-                first_feats.append(featstring)
+                correct_form = ''.join(correct_list)
+                correct_form = correct_form.lower()
+                
+                features_list = row[1].split(' ')
+                featstring = ' '.join(features_list)
 
-            form_surp, att = get_fusion(featstring, correct_form)
+                if not first_form:
+                    first_form.append(correct_form)
+                    first_feats.append(featstring)
 
-            resultsfile.write(f'{correct_form}\t{form_surp}\n')
-            if (i % 1000 == 0):
-                print(f'Row {i}, word {correct_form}, surprisal: {form_surp}, time taken: {time.time() - start}')
-            
-            fusion_list.append(form_surp)
+                try:
+                    form_surp, att = get_fusion(featstring, correct_form)
+                    resultsfile.write(f'{correct_form}\t{form_surp}\n')
+                    if (i % 1000 == 0):
+                        print(f'Row {i}, word {correct_form}, surprisal: {form_surp}, time taken: {time.time() - start}')
+                    fusion_list.append(form_surp)
+                except KeyError:
+                    print(f'KeyError with {featstring}.')
 
-        mean_surp_form = statistics.mean(fusion_list)
-        med_surp_form = statistics.median(fusion_list)
-        stdev_surp_form = statistics.stdev(fusion_list)
+            mean_surp_form = statistics.mean(fusion_list)
+            med_surp_form = statistics.median(fusion_list)
+            stdev_surp_form = statistics.stdev(fusion_list)
 
-        first_form.clear()
-        resultsfile.close()
-
+            first_form.clear()
+            resultsfile.close()
     surpfile = os.path.join(filepath, language, f'{language}_surprisals.txt')
     with open(surpfile, 'a') as surpfile:
         surpfile.write(f'{";".join(trainfeats)}\t{mean_surp_form}\t{med_surp_form}\t{stdev_surp_form}\n')
