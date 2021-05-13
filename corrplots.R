@@ -13,16 +13,27 @@ permutation_test = function(x, y, num_iter=10000, method="spearman") {
   mean(results >= standard)
 }
 
-ds = read_tsv("langdata/surp_size.csv")
+ds = read_tsv("langdata/surp_size.csv") %>%
+  separate(key, into=c("pos", "lang"), sep="\\.") %>%
+  mutate(avg_surp=surp/size)
 
 # FUSION -> SMALL PARADIGM
 
 ds %>%
-  mutate(avg_surp=surp/size) %>%
-  ggplot(aes(x=log(size), y=avg_surp, label=key)) +
-    geom_text() +
+  ggplot(aes(x=log(size), y=avg_surp, label=paste(lang, pos), color=lang, group=1)) +
+    geom_hline(yintercept=0, color="black") +
     stat_smooth(method='lm') +
-    theme_minimal()
+    geom_text() +
+    theme_minimal() +
+    labs(x="Log Paradigm Size", y="Average Fusion") +
+    guides(color=F)
+
+ggsave("result_plots/size_fusion_plot.pdf", width=5, height=4)
+
+
+with(ds, cor.test(log(size), avg_surp, method="spearman"))
+with(ds, permutation_test(log(size), avg_surp, method="pearson"))
+
 
 # FUSION -> FREQUENCY
 
@@ -37,7 +48,7 @@ df %>%
   geom_text(size=2) +
   theme_minimal() +
   guides(color=F) +
-  labs(x="Log Frequency", y="Average Fusion")
+  labs(x="Log Normalized Frequency", y="Average Fusion")
 
 ggsave("result_plots/feature_freq_fusion_plot.pdf", width=5, height=4)
 
