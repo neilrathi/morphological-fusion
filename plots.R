@@ -13,6 +13,30 @@ permutation_test = function(x, y, num_iter=10000, method="spearman") {
   mean(results >= standard)
 }
 
+d = read_tsv("langdata/lang_data.csv")
+
+d %>%
+  separate(code_key, into=c("code", "pos"), sep=" ") %>%
+  mutate(pos=case_when(
+    pos == "Adjectives" ~ "A",
+    pos == "Nouns" ~ "N",
+    pos == "Verbs" ~ "V",
+    TRUE ~ pos
+  )) %>%
+  unite(code_key, code, pos, sep=" ") %>%
+  ggplot(aes(x=reorder(code_key, surprisal, FUN=median), y=surprisal, fill=family)) +
+    geom_boxplot(outlier.shape=NA) +
+    stat_summary(fun=mean, geom="point", shape=20, size=3, color="black", fill="black") +
+    labs(x="", y="Average Fusion (bits)", fill="") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 40, hjust=0.95, vjust=1.2), 
+          legend.position="top", 
+          legend.text=element_text(size=7)) +
+    guides(fill = guide_legend(nrow = 1, byrow = TRUE)) + 
+    ylim(0,50)
+
+ggsave("result_plots/main_figure.pdf", width=13, height=4)
+
 ds = read_tsv("langdata/surp_size.csv") %>%
   separate(key, into=c("pos", "lang"), sep="\\.") %>%
   mutate(avg_surp=surp/size)
