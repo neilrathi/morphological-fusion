@@ -1,11 +1,9 @@
 # morphological-fusion
-Code for morphological fusion study.
+Contains code for "An information-theoretic characterization of morphological fusion" (at EMNLP 2021).
+
+Contact [neilrathi@gmail.com](mailto:neilrathi@gmail.com) for any questions.
 
 ## Directory
-* `src` contains the code for training/testing a model (either on one language or one feature combination)
-* `plots` contains various plots from training (attn and loss)
+* `code` contains the code for creating fusion data for a language, as well as analysis code
 * `result_plots` contains plots with frequencies and fusions
-* `model.py` is the actual python code for running and training one model
-* `model_run.py` is the same as `model.py`, but it iterates through all features in a language
-* `get_counts.py` is able to compute approximate frequency counts from Wikipedia + Unimorph
-* `language_surprisals.txt` contains mean and median surprisal values for each form in a language
+* `langdata` has the fusion, paradigm size, and frequency data
