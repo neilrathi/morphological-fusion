@@ -1,9 +1,12 @@
 # morphological-fusion
-Contains code for "An information-theoretic characterization of morphological fusion" (at EMNLP 2021).
+This repo contains code and data for "An information-theoretic characterization of morphological fusion" (at EMNLP 2021).
 
-Contact [neilrathi@gmail.com](mailto:neilrathi@gmail.com) for any questions.
+Contact [neilrathi@gmail.com](mailto:neilrathi@gmail.com) with any questions!
 
 ## Directory
 * `code` contains the code for creating fusion data for a language, as well as analysis code
-* `result_plots` contains plots with frequencies and fusions
-* `langdata` has the fusion, paradigm size, and frequency data
+* `result_plots` contains the plots used in the paper (main figure, paradigm size vs. fusion, frequency vs. fusion)
+* `langdata` has data for
+	* fusion by part-of-speech and language
+	* paradigm size by part-of-speech and language (vs. fusion)
+	* form frequency by feature and language (vs. fusion)
