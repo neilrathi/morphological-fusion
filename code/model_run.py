@@ -515,9 +515,16 @@ for trainfeats in featureslist:
                 except KeyError:
                     print(f'KeyError with {featstring}.')
 
-            mean_surp_form = statistics.mean(fusion_list)
-            med_surp_form = statistics.median(fusion_list)
-            stdev_surp_form = statistics.stdev(fusion_list)
+            try:
+                mean_surp_form = statistics.mean(fusion_list)
+                med_surp_form = statistics.median(fusion_list)
+                stdev_surp_form = statistics.stdev(fusion_list)
+            except statistics.StatisticsError:
+                mean_surp_form = np.nan
+                med_surp_form = np.nan
+                stdev_surp_form = np.nan
+                print('Not enough data for mean/med/sd surprisal, skipping feature combination.\n')
+
 
             first_form.clear()
             resultsfile.close()
