@@ -12,6 +12,6 @@ Contact [neilrathi@gmail.com](mailto:neilrathi@gmail.com) with any questions!
 	* form frequency by feature and language (vs. fusion)
 
 ## Requirements
-* R. We used version 4.0.3. Analyses and plot generation requires `tidyr`, `dplyr`, `ggplot2`, and `rPref`.
+* R. We used version 4.0.3. Analyses and plot generation require `tidyr`, `dplyr`, `ggplot2`, and `rPref`.
 * Python 3.8
 * GPU TensorFlow. We used version 2.2.0.
