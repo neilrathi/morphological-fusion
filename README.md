@@ -1,4 +1,4 @@
-# morphological-fusion
+# An Information-Theoretic Characterization of Morphological Fusion
 This repo contains code and data for "An information-theoretic characterization of morphological fusion" (at EMNLP 2021).
 
 Contact [neilrathi@gmail.com](mailto:neilrathi@gmail.com) with any questions!
@@ -10,3 +10,8 @@ Contact [neilrathi@gmail.com](mailto:neilrathi@gmail.com) with any questions!
 	* fusion by part-of-speech and language
 	* paradigm size by part-of-speech and language (vs. fusion)
 	* form frequency by feature and language (vs. fusion)
+
+## Requirements
+* R. We used version 4.0.3. Analyses and plot generation require `tidyr`, `dplyr`, `ggplot2`, and `rPref`.
+* Python 3.8
+* GPU TensorFlow. We used version 2.2.0.
