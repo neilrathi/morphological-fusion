@@ -2,7 +2,7 @@ library(tidyverse)
 library(rPref) # pareto
 library(extrafont) # font embedding
 rm(list=ls())
-setwd("~/Desktop/morphological-fusion/")
+setwd("~/projects/morphological-fusion/")
 
 # simple rectangular sum
 pareto_area = function(x, y) {
@@ -76,16 +76,17 @@ d %>%
   unite(code_key, code, pos, sep=" ") %>%
   ggplot(aes(x=reorder(code_key, surprisal, FUN=median), y=surprisal, fill=family)) +
     geom_boxplot(outlier.shape=NA) +
-    stat_summary(fun=mean, geom="point", shape=20, size=3, color="black", fill="black") +
+    stat_summary(fun=mean, geom="point", shape=20, size=7, color="black", fill="black") +
     labs(x="", y="Average Fusion (bits)", fill="") +
     theme_minimal() +
-    theme(axis.text.x = element_text(angle = 40, hjust=0.95, vjust=1.2), 
+    theme(axis.text.x = element_text(angle = 40, hjust=0.95, vjust=1.2, size=36), 
+          axis.title = element_text(size=36),
           legend.position="top", 
-          legend.text=element_text(size=7)) +
+          legend.text=element_text(size=36)) +
     guides(fill = guide_legend(nrow = 1, byrow = TRUE)) + 
     ylim(0,50)
 
-ggsave("result_plots/main_figure.pdf", width=13, height=4)
+ggsave("result_plots/main_figure.png", width=14, height=3.5, units = "in", dpi = 300)
 embed_fonts("result_plots/main_figure.pdf")
 
 # FUSION -> SMALL PARADIGM
@@ -132,12 +133,13 @@ res %>%
   ggplot(aes(x = logfreq, y = avgsurp, label = paste(feature, lang, sep="_"), color = lang, group = 1)) + 
   geom_hline(yintercept=0, color="black") +
   geom_point(data = res1) +
-  geom_text(size = 2) +
+  geom_text(size = 5) +
   geom_step(data = res1 , aes(x = logfreq, y = avgsurp), direction="hv", color = "black") +
   stat_smooth(method = "lm", color = "black") +
   theme_minimal() + 
+  theme(axis.text = element_text(size=14), axis.title = element_text(size=14)) +
   guides(color = F) +
   labs(x = "Log Normalized Frequency", y = "Average Fusion")
 
-ggsave("result_plots/feature_freq_fusion_plot.pdf", width=5, height=4)
+ggsave("result_plots/feature_freq_fusion_plot.png", width=9, height=6, units = "in", dpi = 300)
 embed_fonts("result_plots/feature_freq_fusion_plot.pdf")
